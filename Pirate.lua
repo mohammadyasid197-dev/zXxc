@@ -1,26 +1,42 @@
--- [[ ZABr0om PIRATE v4 - by ZBN|ZAB ]] --
--- Multi Password + Rainbow Theme
--- 6 Password Valid
+-- [[ ZABr0om PIRATE PRIVATE - by ZBN|ZAB ]] --
+-- 🔐 PRIVATE VERSION - Password Rahasia
+-- Share OK, tapi password cuma yang punya
 
--- ============ MULTI PASSWORD ============
-local VALID_PASSWORDS = {
-    "ZabProKILER123zc",
-    "XCCCTYNNIC",
-    "ZBNTROJANPRO",
-    "FGERYAGHHTSH",
-    "CCVIYYGRATIH",
-    "FVProGGG7"
-}
+if getgenv and getgenv().ZABr0omPriv then
+    for _, c in pairs(getgenv().ZABr0omPriv) do
+        pcall(function() c:Disconnect() end)
+    end
+end
+getgenv().ZABr0omPriv = {}
 
-local MAX_ATTEMPTS = 5
-local attempts = 0
-local passwordPassed = false
-
--- ============ SAFE PARENT ============
 local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 local LP = Players.LocalPlayer
+local SG = game:GetService("StarterGui")
 
+local function notify(t, x)
+    pcall(function()
+        SG:SetCore("SendNotification", {Title=t, Text=x, Duration=3})
+    end)
+end
+
+-- ============================================
+-- 🔐 PASSWORD PRIVAT (GANTI SESUKA HATI)
+-- ============================================
+local VALID_PASSWORDS = {
+    "ZABPRIVATHUz",
+    "ZBNPROy999",
+    "VIPZAB121X2",
+    "ZABVIPPRO99b",
+}
+
+local MAX_ATTEMPTS = 3
+local attempts = 0
+local passwordPassed = false
+
+-- ============================================
+-- SAFE PARENT
+-- ============================================
 local function getSafeParent()
     local ok, hui = pcall(function() return gethui() end)
     if ok and hui then return hui end
@@ -38,7 +54,7 @@ pcall(function()
     if oldPw then oldPw:Destroy() end
 end)
 
--- ============ WARNA TEMA ============
+-- ============ TEMA ============
 local C = {
     Void       = Color3.fromRGB(18, 12, 28),
     Panel      = Color3.fromRGB(28, 20, 42),
@@ -77,14 +93,6 @@ local PwStroke = Instance.new("UIStroke", PwPanel)
 PwStroke.Thickness = 1.5
 PwStroke.Color = C.Border
 
-local PwStrokeGrad = Instance.new("UIGradient", PwStroke)
-PwStrokeGrad.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(140, 90, 220)),
-    ColorSequenceKeypoint.new(0.50, Color3.fromRGB(200, 140, 255)),
-    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(140, 90, 220)),
-})
-PwStrokeGrad.Rotation = 45
-
 local PwHeader = Instance.new("Frame", PwPanel)
 PwHeader.Size = UDim2.new(1, 0, 0, 42)
 PwHeader.BackgroundColor3 = C.Header
@@ -96,13 +104,6 @@ PwHeaderFix.Size = UDim2.new(1, 0, 0, 12)
 PwHeaderFix.Position = UDim2.new(0, 0, 1, -12)
 PwHeaderFix.BackgroundColor3 = C.Header
 PwHeaderFix.BorderSizePixel = 0
-
-local PwHeaderGrad = Instance.new("UIGradient", PwHeader)
-PwHeaderGrad.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 28, 78)),
-    ColorSequenceKeypoint.new(0.50, Color3.fromRGB(65, 38, 100)),
-    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 28, 78)),
-})
 
 local LockIcon = Instance.new("TextLabel", PwHeader)
 LockIcon.Size = UDim2.new(0, 32, 0, 32)
@@ -117,7 +118,7 @@ local PwTitle = Instance.new("TextLabel", PwHeader)
 PwTitle.Size = UDim2.new(1, -50, 0, 18)
 PwTitle.Position = UDim2.new(0, 48, 0, 5)
 PwTitle.BackgroundTransparency = 1
-PwTitle.Text = "ZABr0om PIRATE v4"
+PwTitle.Text = "PRIVATE SCRIPT 🔒"
 PwTitle.TextColor3 = C.Accent
 PwTitle.Font = Enum.Font.GothamBlack
 PwTitle.TextSize = 14
@@ -128,7 +129,7 @@ local PwSubTitle = Instance.new("TextLabel", PwHeader)
 PwSubTitle.Size = UDim2.new(1, -50, 0, 12)
 PwSubTitle.Position = UDim2.new(0, 48, 0, 24)
 PwSubTitle.BackgroundTransparency = 1
-PwSubTitle.Text = "🔑 6 Password Valid | by ZBN|ZAB"
+PwSubTitle.Text = "by ZBN|ZAB • Private Access"
 PwSubTitle.TextColor3 = C.TextDim
 PwSubTitle.Font = Enum.Font.GothamMedium
 PwSubTitle.TextSize = 9
@@ -139,7 +140,7 @@ local PwInfo = Instance.new("TextLabel", PwPanel)
 PwInfo.Size = UDim2.new(1, -20, 0, 20)
 PwInfo.Position = UDim2.new(0, 10, 0, 50)
 PwInfo.BackgroundTransparency = 1
-PwInfo.Text = "▸ Masukkan salah satu password:"
+PwInfo.Text = "▸ Masukkan password rahasia:"
 PwInfo.TextColor3 = C.TextDim
 PwInfo.Font = Enum.Font.GothamMedium
 PwInfo.TextSize = 10
@@ -192,7 +193,7 @@ local PwStatus = Instance.new("TextLabel", PwPanel)
 PwStatus.Size = UDim2.new(1, -20, 0, 14)
 PwStatus.Position = UDim2.new(0, 10, 1, -20)
 PwStatus.BackgroundTransparency = 1
-PwStatus.Text = "Sisa percobaan: " .. MAX_ATTEMPTS
+PwStatus.Text = "Sisa: " .. MAX_ATTEMPTS
 PwStatus.TextColor3 = C.TextDim
 PwStatus.Font = Enum.Font.GothamMedium
 PwStatus.TextSize = 9
@@ -201,23 +202,17 @@ PwStatus.TextXAlignment = Enum.TextXAlignment.Left
 -- ============ CHECK PASSWORD ============
 local function checkPassword()
     local input = PwInput.Text
-    
     local isValid = false
     for _, pw in ipairs(VALID_PASSWORDS) do
-        if input == pw then
-            isValid = true
-            break
-        end
+        if input == pw then isValid = true break end
     end
     
     if isValid then
         passwordPassed = true
-        PwStatus.Text = "✅ Password benar! Loading..."
+        PwStatus.Text = "✅ Access Granted! Loading..."
         PwStatus.TextColor3 = C.Success
         PwInputStroke.Color = C.Success
-        
         task.wait(0.5)
-        
         local tween = game:GetService("TweenService"):Create(PwPanel, 
             TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In),
             {Size = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 1}
@@ -226,42 +221,30 @@ local function checkPassword()
         tween.Completed:Connect(function()
             PwUI:Destroy()
         end)
-        
         return true
     else
         attempts = attempts + 1
         local left = MAX_ATTEMPTS - attempts
-        
         if left <= 0 then
-            PwStatus.Text = "❌ TERLALU BANYAK PERCOBAAN!"
+            PwStatus.Text = "❌ BLOCKED!"
             PwStatus.TextColor3 = C.Danger
             PwInputStroke.Color = C.Danger
-            PwInput.Text = ""
-            
             task.wait(1)
-            
             PwPanel.Size = UDim2.new(0, 0, 0, 0)
             PwUI:Destroy()
-            
-            game:GetService("StarterGui"):SetCore("SendNotification", {
-                Title = "❌ ACCESS DENIED",
-                Text = "Password salah " .. MAX_ATTEMPTS .. "x. Script diblokir!",
-                Duration = 5
-            })
+            notify("❌ ACCESS DENIED", "Password salah " .. MAX_ATTEMPTS .. "x. Script blocked!")
             return false
         else
-            PwStatus.Text = "❌ Password salah! Sisa: " .. left
+            PwStatus.Text = "❌ Salah! Sisa: " .. left
             PwStatus.TextColor3 = C.Danger
             PwInputStroke.Color = C.Danger
             PwInput.Text = ""
-            
             local origPos = PwPanel.Position
             for i = 1, 6 do
                 PwPanel.Position = UDim2.new(origPos.X.Scale, origPos.X.Offset + (i % 2 == 0 and 8 or -8), origPos.Y.Scale, origPos.Y.Offset)
                 task.wait(0.04)
             end
             PwPanel.Position = origPos
-            
             task.wait(0.5)
             PwInputStroke.Color = C.BorderSoft
         end
@@ -281,7 +264,7 @@ game:GetService("TweenService"):Create(PwPanel,
     {Size = UDim2.new(0, 280, 0, 190), BackgroundTransparency = 0}
 ):Play()
 
--- Drag PW
+-- Drag
 local pwDragging, pwDragStart, pwStartPos
 PwHeader.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -309,25 +292,11 @@ repeat task.wait(0.1) until passwordPassed
 -- SCRIPT UTAMA
 -- ============================================
 
-if getgenv and getgenv().ZABr0omV4 then
-    for _, c in pairs(getgenv().ZABr0omV4) do
-        pcall(function() c:Disconnect() end)
-    end
-end
-getgenv().ZABr0omV4 = {}
-
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
-local StarterGui = game:GetService("StarterGui")
 local Lighting = game:GetService("Lighting")
-
-local function notify(t, x)
-    pcall(function()
-        StarterGui:SetCore("SendNotification", {Title=t, Text=x, Duration=3})
-    end)
-end
 
 -- ============ UI UTAMA ============
 local UI = Instance.new("ScreenGui")
@@ -338,7 +307,6 @@ UI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 UI.Parent = GuiParent
 
 local Panel = Instance.new("Frame", UI)
-Panel.Name = "Panel"
 Panel.Size = UDim2.new(0, 280, 0, 340)
 Panel.Position = UDim2.new(0.5, -140, 0.5, -170)
 Panel.BackgroundColor3 = C.Panel
@@ -350,7 +318,6 @@ local PanelStroke = Instance.new("UIStroke", Panel)
 PanelStroke.Thickness = 2
 PanelStroke.Color = C.Border
 
--- Gradient warna warni (rainbow)
 local PanelStrokeGrad = Instance.new("UIGradient", PanelStroke)
 PanelStrokeGrad.Color = ColorSequence.new({
     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 80, 80)),
@@ -386,8 +353,8 @@ local Flag = Instance.new("TextLabel", Header)
 Flag.Size = UDim2.new(0, 32, 0, 32)
 Flag.Position = UDim2.new(0, 6, 0.5, -16)
 Flag.BackgroundTransparency = 1
-Flag.Text = "🏴‍☠️"
-Flag.TextSize = 24
+Flag.Text = "🔒"
+Flag.TextSize = 22
 Flag.Font = Enum.Font.GothamBold
 Flag.ZIndex = 2
 
@@ -395,7 +362,7 @@ local Title = Instance.new("TextLabel", Header)
 Title.Size = UDim2.new(1, -120, 0, 18)
 Title.Position = UDim2.new(0, 42, 0, 4)
 Title.BackgroundTransparency = 1
-Title.Text = "ZABr0om PIRATE v4"
+Title.Text = "PRIVATE PIRATE v4"
 Title.TextColor3 = C.Accent
 Title.Font = Enum.Font.GothamBlack
 Title.TextSize = 13
@@ -406,8 +373,8 @@ local SubTitle = Instance.new("TextLabel", Header)
 SubTitle.Size = UDim2.new(1, -120, 0, 12)
 SubTitle.Position = UDim2.new(0, 42, 0, 22)
 SubTitle.BackgroundTransparency = 1
-SubTitle.Text = "@" .. LP.Name .. " • Rainbow"
-SubTitle.TextColor3 = C.TextDim
+SubTitle.Text = "@" .. LP.Name .. " • PRIVATE"
+SubTitle.TextColor3 = C.Gold
 SubTitle.Font = Enum.Font.GothamMedium
 SubTitle.TextSize = 9
 SubTitle.TextXAlignment = Enum.TextXAlignment.Left
@@ -457,7 +424,6 @@ uiPad.PaddingTop = UDim.new(0, 4)
 uiPad.PaddingLeft = UDim.new(0, 2)
 uiPad.PaddingRight = UDim.new(0, 2)
 
--- ============ RAINBOW COLOR FUNCTION ============
 local function rainbowColor(t, offset)
     local cycle = (t * 0.2 + (offset or 0) * 0.1) % 1
     if cycle < 0.17 then
@@ -491,7 +457,7 @@ local function makeBtn(txt, callback)
     
     local s = Instance.new("UIStroke", b)
     s.Thickness = 1
-    s.Color = Color3.fromRGB(255, 80, 80)  -- akan di-update rainbow
+    s.Color = Color3.fromRGB(255, 80, 80)
     table.insert(allStrokes, s)
     
     b.MouseEnter:Connect(function()
@@ -518,7 +484,7 @@ local function makeSection(txt)
     return l
 end
 
--- ============ STATE ============
+-- STATE
 local pirateMode = false
 local orbitMode = false
 local espEnabled = false
@@ -576,7 +542,6 @@ local function Manipulate(v)
     if not v:IsA("BasePart") then return end
     if v.Anchored then return end
     if v:IsDescendantOf(LP.Character) then return end
-    
     local parent = v.Parent
     if parent and parent:FindFirstChildOfClass("Humanoid") then return end
     if parent and parent:IsA("Tool") then return end
@@ -586,17 +551,14 @@ local function Manipulate(v)
         v.CanCollide = false
         v.Massless = false
         pcall(function() v:SetNetworkOwner(LP) end)
-        
         if not table.find(getgenv().ZABr0om_Net.Parts, v) then
             table.insert(getgenv().ZABr0om_Net.Parts, v)
         end
-        
         local att = v:FindFirstChild("ZB_Att")
         if not att then
             att = Instance.new("Attachment", v)
             att.Name = "ZB_Att"
         end
-        
         local orient = v:FindFirstChild("ZB_Orient")
         if not orient then
             orient = Instance.new("AlignOrientation", v)
@@ -606,7 +568,6 @@ local function Manipulate(v)
         orient.Mode = Enum.OrientationAlignmentMode.OneAttachment
         orient.MaxTorque = math.huge
         orient.Responsiveness = 100
-        
         local align = v:FindFirstChild("ZB_Align")
         if not align then
             align = Instance.new("AlignPosition", v)
@@ -639,11 +600,9 @@ local function clearAllParts()
     end
 end
 
--- ESP
 local function createESP(player)
     if player == LP or not player.Character then return end
     if player.Character:FindFirstChild("ZAB_ESP") then return end
-    
     local hl = Instance.new("Highlight")
     hl.Name = "ZAB_ESP"
     hl.Adornee = player.Character
@@ -652,7 +611,6 @@ local function createESP(player)
     hl.FillTransparency = 0.6
     hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
     hl.Parent = player.Character
-    
     local root = player.Character:FindFirstChild("HumanoidRootPart")
     if root then
         local bb = Instance.new("BillboardGui")
@@ -661,17 +619,14 @@ local function createESP(player)
         bb.StudsOffset = Vector3.new(0, 3, 0)
         bb.AlwaysOnTop = true
         bb.Parent = root
-        
         local nameLbl = Instance.new("TextLabel", bb)
         nameLbl.Size = UDim2.new(1, 0, 0.5, 0)
         nameLbl.BackgroundTransparency = 1
         nameLbl.Text = player.Name
         nameLbl.TextColor3 = Color3.fromRGB(255, 200, 80)
         nameLbl.TextStrokeTransparency = 0
-        nameLbl.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
         nameLbl.Font = Enum.Font.GothamBold
         nameLbl.TextSize = 12
-        
         local distLbl = Instance.new("TextLabel", bb)
         distLbl.Name = "DistLbl"
         distLbl.Size = UDim2.new(1, 0, 0.5, 0)
@@ -680,7 +635,6 @@ local function createESP(player)
         distLbl.Text = "[--]"
         distLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
         distLbl.TextStrokeTransparency = 0
-        distLbl.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
         distLbl.Font = Enum.Font.GothamMedium
         distLbl.TextSize = 10
     end
@@ -707,16 +661,13 @@ local function updateESPDistance()
                 local bb = r:FindFirstChild("ZAB_ESP_Name")
                 if bb then
                     local d = bb:FindFirstChild("DistLbl")
-                    if d then
-                        d.Text = "[" .. math.floor((r.Position - myRoot.Position).Magnitude) .. " studs]"
-                    end
+                    if d then d.Text = "[" .. math.floor((r.Position - myRoot.Position).Magnitude) .. " studs]" end
                 end
             end
         end
     end
 end
 
--- Pirate
 local function spawnPirateShip()
     for _, tool in ipairs(LP.Backpack:GetChildren()) do
         local n = tool.Name:lower()
@@ -791,7 +742,6 @@ local function stopSpin()
     if spinLoop then spinLoop:Disconnect() spinLoop = nil end
 end
 
--- ============ BUTTONS ============
 makeSection("🏴‍☠️ PIRATE")
 
 local pirateBtn = makeBtn("🏴‍☠️ Pirate Mode: OFF", function()
@@ -868,7 +818,7 @@ end)
 
 makeSection("⚡ ACTIONS")
 
-local tpBtn = makeBtn("⚡ Teleport ke Target", function()
+makeBtn("⚡ Teleport ke Target", function()
     if teleportToTarget() then
         notify("⚡", "Teleport!")
     else
@@ -917,7 +867,7 @@ local spinBtn = makeBtn("🌀 Spin + Banting: OFF", function()
     end
 end)
 
-local flingAllBtn = makeBtn("💀 Fling Semua Player", function()
+makeBtn("💀 Fling Semua Player", function()
     for _, p in ipairs(Players:GetPlayers()) do
         if p ~= LP then
             local t = getRoot(p)
@@ -976,17 +926,13 @@ local espBtn = makeBtn("👁️ ESP Player: OFF", function()
         espBtn.TextColor3 = Color3.fromRGB(255, 80, 200)
         espBtn:SetAttribute("on", true)
         espBtn.BackgroundColor3 = C.ButtonOn
-        for _, p in ipairs(Players:GetPlayers()) do
-            createESP(p)
-        end
+        for _, p in ipairs(Players:GetPlayers()) do createESP(p) end
     else
         espBtn.Text = "👁️ ESP Player: OFF"
         espBtn.TextColor3 = C.Text
         espBtn:SetAttribute("on", false)
         espBtn.BackgroundColor3 = C.Button
-        for _, p in ipairs(Players:GetPlayers()) do
-            removeESP(p)
-        end
+        for _, p in ipairs(Players:GetPlayers()) do removeESP(p) end
     end
 end)
 
@@ -1048,7 +994,6 @@ local flyBtn = makeBtn("🦅 Fly: OFF", function()
     local hrp = char:FindFirstChild("HumanoidRootPart")
     local hum = char:FindFirstChildOfClass("Humanoid")
     if not hrp or not hum then return end
-    
     if not hrp:FindFirstChild("ZAB_FlyBV") then
         local bv = Instance.new("BodyVelocity", hrp)
         bv.Name = "ZAB_FlyBV"
@@ -1094,7 +1039,7 @@ end)
 
 makeSection("🛑 RESET")
 
-local resetBtn = makeBtn("🛑 STOP SEMUA", function()
+makeBtn("🛑 STOP SEMUA", function()
     pirateMode = false
     orbitMode = false
     espEnabled = false
@@ -1106,21 +1051,18 @@ local resetBtn = makeBtn("🛑 STOP SEMUA", function()
     clearAllParts()
     stopFling()
     stopSpin()
-    for _, p in ipairs(Players:GetPlayers()) do
-        removeESP(p)
-    end
+    for _, p in ipairs(Players:GetPlayers()) do removeESP(p) end
     notify("🛑", "Stop semua")
 end)
 
 local Footer = Instance.new("TextLabel", Content)
 Footer.Size = UDim2.new(1, 0, 0, 20)
 Footer.BackgroundTransparency = 1
-Footer.Text = ">> by ZBN|ZAB v4 <<"
+Footer.Text = ">> by ZBN|ZAB • PRIVATE <<"
 Footer.TextColor3 = C.TextDim
 Footer.Font = Enum.Font.GothamBlack
 Footer.TextSize = 9
 
--- Minimize
 local isMin = false
 local origSize = Panel.Size
 MinBtn.MouseButton1Click:Connect(function()
@@ -1128,24 +1070,16 @@ MinBtn.MouseButton1Click:Connect(function()
     local tgt = isMin and UDim2.new(0, 280, 0, 40) or origSize
     MinBtn.Text = isMin and "+" or "−"
     TweenService:Create(Panel, TweenInfo.new(0.25), {Size = tgt}):Play()
-    if isMin then
-        Content.Visible = false
-    else
-        task.delay(0.2, function() Content.Visible = true end)
-    end
+    if isMin then Content.Visible = false
+    else task.delay(0.2, function() Content.Visible = true end) end
 end)
 
 CloseBtn.MouseButton1Click:Connect(function()
-    stopFling()
-    stopSpin()
-    clearAllParts()
-    for _, p in ipairs(Players:GetPlayers()) do
-        removeESP(p)
-    end
+    stopFling() stopSpin() clearAllParts()
+    for _, p in ipairs(Players:GetPlayers()) do removeESP(p) end
     pcall(function() UI:Destroy() end)
 end)
 
--- Drag
 local dragging, dragStart, startPos
 Header.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -1166,32 +1100,21 @@ UserInputService.InputEnded:Connect(function(input)
     end
 end)
 
--- ============ RAINBOW LOOP ============
 task.spawn(function()
     local hue = 0
     while UI.Parent do
         local t = tick()
         hue = (hue + 0.005) % 1
-        
-        -- Update semua stroke jadi rainbow
         for i, s in ipairs(allStrokes) do
-            if s and s.Parent then
-                s.Color = rainbowColor(t, i * 0.5)
-            end
+            if s and s.Parent then s.Color = rainbowColor(t, i * 0.5) end
         end
-        
-        -- Panel stroke cycling
         PanelStrokeGrad.Offset = Vector2.new(hue, 0)
-        
-        -- Header gradient cycling
         HeaderGrad.Offset = Vector2.new(hue, 0)
-        
         task.wait(0.05)
     end
 end)
 
--- ============ MAIN LOOPS ============
-table.insert(getgenv().ZABr0omV4, RunService.RenderStepped:Connect(function(dt)
+table.insert(getgenv().ZABr0omPriv, RunService.RenderStepped:Connect(function(dt)
     if not orbitMode then return end
     local myRoot = getRoot(LP)
     if not myRoot then return end
@@ -1217,22 +1140,20 @@ table.insert(getgenv().ZABr0omV4, RunService.RenderStepped:Connect(function(dt)
     end
 end))
 
-table.insert(getgenv().ZABr0omV4, RunService.Heartbeat:Connect(function(dt)
+table.insert(getgenv().ZABr0omPriv, RunService.Heartbeat:Connect(function(dt)
     if not getgenv().ZABr0om_Net.Active then return end
     scanAccum = scanAccum + dt
     if scanAccum >= 1 then
         scanAccum = 0
         task.spawn(function()
             for _, obj in ipairs(Workspace:GetDescendants()) do
-                if obj:IsA("BasePart") and not obj.Anchored then
-                    Manipulate(obj)
-                end
+                if obj:IsA("BasePart") and not obj.Anchored then Manipulate(obj) end
             end
         end)
     end
 end))
 
-table.insert(getgenv().ZABr0omV4, RunService.RenderStepped:Connect(function()
+table.insert(getgenv().ZABr0omPriv, RunService.RenderStepped:Connect(function()
     local char = LP.Character
     if not char then return end
     local hrp = char:FindFirstChild("HumanoidRootPart")
@@ -1250,7 +1171,7 @@ table.insert(getgenv().ZABr0omV4, RunService.RenderStepped:Connect(function()
     bg.CFrame = cam.CFrame
 end))
 
-table.insert(getgenv().ZABr0omV4, RunService.Heartbeat:Connect(function()
+table.insert(getgenv().ZABr0omPriv, RunService.Heartbeat:Connect(function()
     if espEnabled then updateESPDistance() end
 end))
 
@@ -1260,7 +1181,6 @@ Players.PlayerAdded:Connect(function(p)
         if espEnabled then createESP(p) end
     end)
 end)
-
 Players.PlayerRemoving:Connect(function(p)
     if espEnabled then removeESP(p) end
 end)
@@ -1279,10 +1199,9 @@ TweenService:Create(Panel, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.Easin
     BackgroundTransparency = 0
 }):Play()
 
-notify("🏴‍☠️ ZABr0om v4", "Loaded! ✅ Rainbow Mode")
+notify("🔒 PRIVATE PIRATE", "Loaded! Access Granted ✅")
 print("════════════════════════════════════════")
-print("  🔐 PASSWORD ACCEPTED")
-print("  🏴‍☠️ ZABr0om PIRATE v4")
-print("  🌈 Rainbow Theme")
-print("  by ZBN|ZAB")
+print("  🔐 PRIVATE SCRIPT")
+print("  🏴‍☠️ ZABr0om PRIVATE v4")
+print("  🔒 Access by ZBN|ZAB")
 print("════════════════════════════════════════")
